@@ -43,11 +43,6 @@ cd $BUILD_DIR
 #rm geos-3.3.2.tar.bz2
 #rm -rf geos-3.3.2
 
-
-unzip proj-datumgrid-1.5.zip
-
-#http://download.osgeo.org/proj/proj-datumgrid-1.4.tar.gz
-
 # Install Proj.4
 echo "-----> Fetching and installing Proj.4"
 curl -O http://download.osgeo.org/proj/proj-4.7.0.tar.gz >/dev/null 2>&1
