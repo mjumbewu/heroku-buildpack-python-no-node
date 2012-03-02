@@ -30,11 +30,10 @@ function virtualenv (){
 
 #create the cache dir if it doesn't exist
 
-mkdir $CACHE_DIR/.geos
-cd $BUILD_DIR
-
 # Install GEOS
 if [ ! -f $CACHE_DIR/.geos/libgeos_c.so ]; then
+  mkdir $CACHE_DIR/.geos
+  cd $BUILD_DIR
   echo "-----> Fetching and installing GEOS"
   echo pwd
   curl -O http://download.osgeo.org/geos/geos-3.3.2.tar.bz2 >/dev/null 2>&1
