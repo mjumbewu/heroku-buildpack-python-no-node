@@ -1,8 +1,12 @@
-Heroku buildpack: Python
+Heroku buildpack: GeoDjango
 ========================
 
-This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) for Python apps.
-It uses [virtualenv](http://www.virtualenv.org/) and [pip](http://www.pip-installer.org/).
+This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpacks) for GeoDjango apps.
+It extends the original Python buildpack by adding GEOS, Proj.4 and GDAL, per the [GeoDjango installation
+instructions](https://docs.djangoproject.com/en/dev/ref/contrib/gis/install/).
+
+This buildpack assumes your PostGIS server lives outside the Heroku stack, though we'd love to see it
+forked to handle any setup for Heroku's Postgres services.
 
 Usage
 -----
