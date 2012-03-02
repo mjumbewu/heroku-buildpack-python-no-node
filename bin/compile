@@ -30,18 +30,18 @@ function virtualenv (){
 
 cd $BUILD_DIR
 
-# Install GEOS (Works but takes forever)
-#echo "-----> Fetching and installing GEOS"
-#curl -O http://download.osgeo.org/geos/geos-3.3.2.tar.bz2 >/dev/null 2>&1
-#tar jxvf geos-3.3.2.tar.bz2 >/dev/null 2>&1
-#cd geos-3.3.2
-#./configure --prefix=$CACHE_DIR >/dev/null 2>&1
-#make >/dev/null 2>&1
-#make install >/dev/null 2>&1
-#echo "GEOS installed" | indent
-#cd ..
-#rm geos-3.3.2.tar.bz2
-#rm -rf geos-3.3.2
+# Install GEOS
+echo "-----> Fetching and installing GEOS"
+curl -O http://download.osgeo.org/geos/geos-3.3.2.tar.bz2 >/dev/null 2>&1
+tar jxvf geos-3.3.2.tar.bz2 >/dev/null 2>&1
+cd geos-3.3.2
+./configure --prefix=$CACHE_DIR >/dev/null 2>&1
+make >/dev/null 2>&1
+make install >/dev/null 2>&1
+echo "GEOS installed" | indent
+cd ..
+rm geos-3.3.2.tar.bz2
+rm -rf geos-3.3.2
 
 # Install Proj.4
 echo "-----> Fetching and installing Proj.4"
@@ -49,7 +49,7 @@ curl -O http://download.osgeo.org/proj/proj-4.7.0.tar.gz >/dev/null 2>&1
 curl -O http://download.osgeo.org/proj/proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
 tar xzvf proj-4.7.0.tar.gz >/dev/null 2>&1
 cd proj-4.7.0/nad
-tar xzvf ../../proj-datumgrid-1.4.tar.gz
+tar xzvf ../../proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
 cd ..
 ./configure --prefix=$CACHE_DIR >/dev/null 2>&1
 make >/dev/null 2>&1
@@ -57,7 +57,22 @@ make install >/dev/null 2>&1
 echo "Proj.4 installed" | indent
 cd ..
 rm proj-4.7.0.tar.gz
+rm proj-datumgrid-1.4.tar.gz
 rm -rf proj-4.7.0
+rm -rf proj-datumgrid-1.4
+
+# Install GDAL
+echo "-----> Fetching and installing GDAL"
+curl -O http://download.osgeo.org/gdal/gdal-1.8.1.tar.gz >/dev/null 2>&1
+tar xzvf gdal-1.8.1.tar.gz >/dev/null 2>&1
+cd gdal-1.8.1
+./configure --prefix=$CACHE_DIR >/dev/null 2>&1
+make >/dev/null 2>&1
+make install >/dev/null 2>&1
+echo "GDAL installed" | indent
+cd ..
+rm gdal-1.8.1.tar.gz
+rm -rf gdal-1.8.1
 
 # Reject a non-packaged Django app.
 if [ "$NAME" = "Python" ]; then
@@ -138,8 +153,5 @@ set -e
 for dir in $VIRTUALENV_DIRS; do
   rm -rf $CACHE_DIR/$dir
   cp -R $dir $CACHE_DIR/
-
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/lib
-export PYTHONPATH=/app
 
 done
