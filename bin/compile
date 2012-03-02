@@ -35,17 +35,14 @@ if [ ! -d $CACHE_DIR/geos ]; then
   mkdir $CACHE_DIR/geos
   cd $BUILD_DIR
   echo "-----> Fetching and installing GEOS"
-  echo pwd
   curl -O http://download.osgeo.org/geos/geos-3.3.2.tar.bz2 >/dev/null 2>&1
   tar jxvf geos-3.3.2.tar.bz2 >/dev/null 2>&1
   cd geos-3.3.2
-  echo pwd
   ./configure --prefix=$CACHE_DIR/geos >/dev/null 2>&1
   make >/dev/null 2>&1
   make install >/dev/null 2>&1
   echo "GEOS installed" | indent
   cd $BUILD_DIR
-  echo pwd
   rm geos-3.3.2.tar.bz2
   rm -rf geos-3.3.2
 fi
