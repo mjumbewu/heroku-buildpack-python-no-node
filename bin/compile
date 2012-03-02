@@ -48,24 +48,24 @@ if [ ! -d $CACHE_DIR/geos ]; then
 fi
 
 # Install Proj.4
-#if [ ! -d $CACHE_DIR/proj4 ]; then
-#  echo "-----> Fetching and installing Proj.4"
-#  curl -O http://download.osgeo.org/proj/proj-4.7.0.tar.gz >/dev/null 2>&1
-#  curl -O http://download.osgeo.org/proj/proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
-#  tar xzvf proj-4.7.0.tar.gz >/dev/null 2>&1
-#  cd proj-4.7.0/nad
-#  tar xzvf ../../proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
-#  cd ..
-#  ./configure --prefix=$CACHE_DIR >/dev/null 2>&1
-#  make >/dev/null 2>&1
-#  make install >/dev/null 2>&1
-#  echo "Proj.4 installed" | indent
-#  cd ..
-#  rm proj-4.7.0.tar.gz
-#  rm proj-datumgrid-1.4.tar.gz
-#  rm -rf proj-4.7.0
-#  rm -rf proj-datumgrid-1.4
-#fi
+if [ ! -d $CACHE_DIR/proj4 ]; then
+  echo "-----> Fetching and installing Proj.4"
+  curl -O http://download.osgeo.org/proj/proj-4.7.0.tar.gz >/dev/null 2>&1
+  curl -O http://download.osgeo.org/proj/proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
+  tar xzvf proj-4.7.0.tar.gz >/dev/null 2>&1
+  cd proj-4.7.0/nad
+  tar xzvf ../../proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
+  cd ..
+  ./configure --prefix=$CACHE_DIR >/dev/null 2>&1
+  make >/dev/null 2>&1
+  make install >/dev/null 2>&1
+  echo "Proj.4 installed" | indent
+  cd ..
+  rm proj-4.7.0.tar.gz
+  rm proj-datumgrid-1.4.tar.gz
+  rm -rf proj-4.7.0
+  rm -rf proj-datumgrid-1.4
+fi
 
 # Install GDAL
 #echo "-----> Fetching and installing GDAL"
