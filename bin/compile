@@ -56,7 +56,7 @@ if [ ! -d $CACHE_DIR/proj4 ]; then
   cd proj-4.7.0/nad
   tar xzvf ../../proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
   cd ..
-  ./configure --prefix=$CACHE_DIR >/dev/null 2>&1
+  ./configure --prefix=$CACHE_DIR/proj4 >/dev/null 2>&1
   make >/dev/null 2>&1
   make install >/dev/null 2>&1
   echo "Proj.4 installed" | indent
