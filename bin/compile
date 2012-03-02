@@ -28,10 +28,12 @@ function virtualenv (){
   python "$ROOT_DIR/src/virtualenv-1.7/virtualenv.py" "$@"
 }
 
-cd $BUILD_DIR
+#create the cache dir if it doesn't exist
+mkdir -p $CACHE_DIR
+cd $CACHE_DIR
 
 # Install GEOS
-if [ ! -f /app/.heroku/vendor/lib/libgeos_c.so ]; then
+if [ ! .geos ]; then
   echo "-----> Fetching and installing GEOS"
   curl -O http://download.osgeo.org/geos/geos-3.3.2.tar.bz2 >/dev/null 2>&1
   tar jxvf geos-3.3.2.tar.bz2 >/dev/null 2>&1
