@@ -31,8 +31,8 @@ function virtualenv (){
 cd $BUILD_DIR
 
 # Install GEOS
-if [ ! -d $CACHE_DIR/.geos ]; then
-  mkdir $CACHE_DIR/.geos
+if [ ! -d $CACHE_DIR/geos ]; then
+  mkdir $CACHE_DIR/geos
   cd $BUILD_DIR
   echo "-----> Fetching and installing GEOS"
   echo pwd
@@ -40,7 +40,7 @@ if [ ! -d $CACHE_DIR/.geos ]; then
   tar jxvf geos-3.3.2.tar.bz2 >/dev/null 2>&1
   cd geos-3.3.2
   echo pwd
-  ./configure --prefix=$CACHE_DIR/.geos >/dev/null 2>&1
+  ./configure --prefix=$CACHE_DIR/geos >/dev/null 2>&1
   make >/dev/null 2>&1
   make install >/dev/null 2>&1
   echo "GEOS installed" | indent
@@ -51,22 +51,24 @@ if [ ! -d $CACHE_DIR/.geos ]; then
 fi
 
 # Install Proj.4
-#echo "-----> Fetching and installing Proj.4"
-#curl -O http://download.osgeo.org/proj/proj-4.7.0.tar.gz >/dev/null 2>&1
-#curl -O http://download.osgeo.org/proj/proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
-#tar xzvf proj-4.7.0.tar.gz >/dev/null 2>&1
-#cd proj-4.7.0/nad
-#tar xzvf ../../proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
-#cd ..
-#./configure --prefix=$CACHE_DIR >/dev/null 2>&1
-#make >/dev/null 2>&1
-#make install >/dev/null 2>&1
-#echo "Proj.4 installed" | indent
-#cd ..
-#rm proj-4.7.0.tar.gz
-#rm proj-datumgrid-1.4.tar.gz
-#rm -rf proj-4.7.0
-#rm -rf proj-datumgrid-1.4
+#if [ ! -d $CACHE_DIR/proj4 ]; then
+#  echo "-----> Fetching and installing Proj.4"
+#  curl -O http://download.osgeo.org/proj/proj-4.7.0.tar.gz >/dev/null 2>&1
+#  curl -O http://download.osgeo.org/proj/proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
+#  tar xzvf proj-4.7.0.tar.gz >/dev/null 2>&1
+#  cd proj-4.7.0/nad
+#  tar xzvf ../../proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
+#  cd ..
+#  ./configure --prefix=$CACHE_DIR >/dev/null 2>&1
+#  make >/dev/null 2>&1
+#  make install >/dev/null 2>&1
+#  echo "Proj.4 installed" | indent
+#  cd ..
+#  rm proj-4.7.0.tar.gz
+#  rm proj-datumgrid-1.4.tar.gz
+#  rm -rf proj-4.7.0
+#  rm -rf proj-datumgrid-1.4
+#fi
 
 # Install GDAL
 #echo "-----> Fetching and installing GDAL"
