@@ -49,6 +49,8 @@ fi
 
 # Install Proj.4
 if [ ! -d $CACHE_DIR/proj4 ]; then
+  mkdir $CACHE_DIR/proj4
+  cd $BUILD_DIR
   echo "-----> Fetching and installing Proj.4"
   curl -O http://download.osgeo.org/proj/proj-4.7.0.tar.gz >/dev/null 2>&1
   curl -O http://download.osgeo.org/proj/proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
