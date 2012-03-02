@@ -38,11 +38,11 @@ if [ ! -f $CACHE_DIR/.geos/libgeos_c.so ]; then
   curl -O http://download.osgeo.org/geos/geos-3.3.2.tar.bz2 >/dev/null 2>&1
   tar jxvf geos-3.3.2.tar.bz2 >/dev/null 2>&1
   cd geos-3.3.2
-  ./configure --prefix=$BUILD_DIR >/dev/null 2>&1
+  ./configure --prefix=$CACHE_DIR >/dev/null 2>&1
   make >/dev/null 2>&1
   make install >/dev/null 2>&1
   echo "GEOS installed" | indent
-  cd ..
+  cd $BUILD_DIR
   rm geos-3.3.2.tar.bz2
   rm -rf geos-3.3.2
 fi
