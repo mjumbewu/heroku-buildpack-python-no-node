@@ -28,7 +28,7 @@ function virtualenv (){
   python "$ROOT_DIR/src/virtualenv-1.7/virtualenv.py" "$@"
 }
 
-#create the cache dir if it doesn't exist
+cd $BUILD_DIR
 
 # Install GEOS
 if [ ! -d $CACHE_DIR/.geos ]; then
