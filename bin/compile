@@ -30,6 +30,7 @@ function virtualenv (){
 
 cd $BUILD_DIR
 
+# Install GEOS
 echo "-----> Fetching and installing GEOS"
 curl -O http://download.osgeo.org/geos/geos-3.3.2.tar.bz2 >/dev/null 2>&1
 tar jxvf geos-3.3.2.tar.bz2 >/dev/null 2>&1
@@ -37,8 +38,23 @@ cd geos-3.3.2
 ./configure --prefix=$CACHE_DIR >/dev/null 2>&1
 make >/dev/null 2>&1
 make install >/dev/null 2>&1
-echo "geos installed" | indent
+echo "GEOS installed" | indent
 cd ..
+rm geos-3.3.2.tar.bz2
+rm -rf geos-3.3.2
+
+# Install Proj.4
+echo "-----> Fetching and installing Proj.4"
+curl -O http://download.osgeo.org/proj/proj-4.7.0.tar.gz >/dev/null 2>&1
+tar xzvf proj-4.7.0.tar.gz >/dev/null 2>&1
+cd proj-4.7.0
+./configure --prefix=$CACHE_DIR >/dev/null 2>&1
+make >/dev/null 2>&1
+make install >/dev/null 2>&1
+echo "Proj.4 installed" | indent
+cd ..
+rm proj-4.7.0.tar.gz
+rm -rf proj-4.7.0
 
 # Reject a non-packaged Django app.
 if [ "$NAME" = "Python" ]; then
@@ -119,4 +135,8 @@ set -e
 for dir in $VIRTUALENV_DIRS; do
   rm -rf $CACHE_DIR/$dir
   cp -R $dir $CACHE_DIR/
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/lib
+export PATH=$PATH:/app/lib
+
 done
