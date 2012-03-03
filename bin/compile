@@ -34,12 +34,14 @@ cd $BUILD_DIR
 if [ ! -d $CACHE_DIR/geos ]; then
   mkdir $CACHE_DIR/geos
   cd $BUILD_DIR
-  echo "-----> Fetching and installing GEOS"
+  echo "-----> Fetching and installing GEOS 3.3.2"
   curl -O http://download.osgeo.org/geos/geos-3.3.2.tar.bz2 >/dev/null 2>&1
   tar jxvf geos-3.3.2.tar.bz2 >/dev/null 2>&1
   cd geos-3.3.2
   ./configure --prefix=$CACHE_DIR/geos >/dev/null 2>&1
+  echo "-----> Building ..."
   make >/dev/null 2>&1
+  echo "-----> Installing ..."
   make install >/dev/null 2>&1
   echo "GEOS installed" | indent
   cd $BUILD_DIR
@@ -51,7 +53,7 @@ fi
 if [ ! -d $CACHE_DIR/proj4 ]; then
   mkdir $CACHE_DIR/proj4
   cd $BUILD_DIR
-  echo "-----> Fetching and installing Proj.4"
+  echo "-----> Fetching and installing Proj.4 4.7.0"
   curl -O http://download.osgeo.org/proj/proj-4.7.0.tar.gz >/dev/null 2>&1
   curl -O http://download.osgeo.org/proj/proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
   tar xzvf proj-4.7.0.tar.gz >/dev/null 2>&1
@@ -59,10 +61,12 @@ if [ ! -d $CACHE_DIR/proj4 ]; then
   tar xzvf ../../proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
   cd ..
   ./configure --prefix=$CACHE_DIR/proj4 >/dev/null 2>&1
+  echo "-----> Building ..."
   make >/dev/null 2>&1
+  echo "-----> Installing ..."
   make install >/dev/null 2>&1
   echo "Proj.4 installed" | indent
-  cd ..
+  cd $BUILD_DIR
   rm proj-4.7.0.tar.gz
   rm proj-datumgrid-1.4.tar.gz
   rm -rf proj-4.7.0
@@ -70,17 +74,23 @@ if [ ! -d $CACHE_DIR/proj4 ]; then
 fi
 
 # Install GDAL
-#echo "-----> Fetching and installing GDAL"
-#curl -O http://download.osgeo.org/gdal/gdal-1.8.1.tar.gz >/dev/null 2>&1
-#tar xzvf gdal-1.8.1.tar.gz >/dev/null 2>&1
-#cd gdal-1.8.1
-#./configure --prefix=$CACHE_DIR >/dev/null 2>&1
-#make >/dev/null 2>&1
-#make install >/dev/null 2>&1
-#echo "GDAL installed" | indent
-#cd ..
-#rm gdal-1.8.1.tar.gz
-#rm -rf gdal-1.8.1
+if [ ! -d $CACHE_DIR/gdal ]; then
+  mkdir $CACHE_DIR/gdal
+  cd $BUILD_DIR
+  echo "-----> Fetching and installing GDAL 1.8.1"
+  curl -O http://download.osgeo.org/gdal/gdal-1.8.1.tar.gz >/dev/null 2>&1
+  tar xzvf gdal-1.8.1.tar.gz >/dev/null 2>&1
+  cd gdal-1.8.1
+  ./configure --with-geos=$CACHE_DIR/geos/bin/geos-config --prefix=$CACHE_DIR/gdal >/dev/null 2>&1
+  echo "-----> Building ..."
+  make >/dev/null 2>&1
+  echo "-----> Installing ..."
+  make install >/dev/null 2>&1
+  echo "GDAL installed" | indent
+  cd $BUILD_DIR
+  rm gdal-1.8.1.tar.gz
+  rm -rf gdal-1.8.1
+fi
 
 # Reject a non-packaged Django app.
 if [ "$NAME" = "Python" ]; then
