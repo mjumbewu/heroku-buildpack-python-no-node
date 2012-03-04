@@ -11,6 +11,8 @@ ROOT_DIR=$(dirname $BIN_DIR)
 BUILD_DIR=$1
 CACHE_DIR=$2
 
+mkdir -p $BUILD_DIR $CACHE_DIR
+
 NAME=$($BIN_DIR/detect $BUILD_DIR)
 PIP_DOWNLOAD_CACHE=${PIP_DOWNLOAD_CACHE:-$CACHE_DIR/pip_downloads}
 VIRTUALENV_DIRS="bin include lib"
