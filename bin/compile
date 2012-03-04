@@ -85,7 +85,7 @@ if [ ! -d $CACHE_DIR/gdal ]; then
   cd gdal-1.8.1
   ./configure --with-geos=$CACHE_DIR/geos/bin/geos-config --prefix=$CACHE_DIR/gdal >/dev/null 2>&1
   echo "-----> Building ..."
-  make >/dev/null 2>&1
+  make
   echo "-----> Installing ..."
   make install >/dev/null 2>&1
   echo "GDAL installed" | indent
