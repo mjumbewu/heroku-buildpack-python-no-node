@@ -137,6 +137,7 @@ set -e
 
 # Create set-aside .heroku folder.
 mkdir -p .heroku
+echo "blah"
 mkdir -p .geodjango
 
 # Pylibmc support.
