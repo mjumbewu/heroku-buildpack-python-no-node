@@ -83,9 +83,9 @@ fi
 if [ ! -d $CACHE_DIR/gdal ]; then
   cd $BUILD_DIR
   echo "-----> Fetching and installing GDAL 1.8.1"
-  curl -O https://s3.amazonaws.com/cirheroku/gdal-1.8.1.-heroku.tar.gz
+  curl -O https://s3.amazonaws.com/cirheroku/gdal-1.8.1-heroku.tar.gz >/dev/null 2>&1
   echo "-----> Installing ..."
-  tar xzvf gdal-1.8.1-heroku.tar.gz
+  tar xzvf gdal-1.8.1-heroku.tar.gz >/dev/null 2>&1
   mv gdal-1.8.1-heroku $CACHE_DIR/gdal
   rm -rf gdal-1.8.1-heroku
   rm -rf gdal-1.8.1-heroku.tar.gz
