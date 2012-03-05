@@ -33,13 +33,14 @@ function virtualenv (){
 cd $BUILD_DIR
 
 # Install GEOS
-if [ ! -f $CACHE_DIR/geos/lib/libgeos_c.so ]; then
+if [ ! -d $CACHE_DIR/geos ]; then
   mkdir $CACHE_DIR/geos
   cd $BUILD_DIR
   echo "-----> Fetching and installing GEOS 3.3.2"
   curl -O http://download.osgeo.org/geos/geos-3.3.2.tar.bz2 >/dev/null 2>&1
   tar jxvf geos-3.3.2.tar.bz2 >/dev/null 2>&1
   cd geos-3.3.2
+  # Compile with the directory prefix we will actually use. Like a boss.
   ./configure --prefix=/app/.geodjango/geos >/dev/null 2>&1
   echo "-----> Building ..."
   make >/dev/null 2>&1
@@ -49,6 +50,7 @@ if [ ! -f $CACHE_DIR/geos/lib/libgeos_c.so ]; then
   cd $BUILD_DIR
   rm geos-3.3.2.tar.bz2
   rm -rf geos-3.3.2
+  # Move files to $CACHE_DIR so they will carry over between deploys.
   mv /app/.geodjango/geos $CACHE_DIR
 fi
 
@@ -63,7 +65,7 @@ if [ ! -d $CACHE_DIR/proj4 ]; then
   cd proj-4.7.0/nad
   tar xzvf ../../proj-datumgrid-1.4.tar.gz >/dev/null 2>&1
   cd ..
-  ./configure --prefix=$CACHE_DIR/proj4 >/dev/null 2>&1
+  ./configure --prefix=--prefix=/app/.geodjango/proj4 >/dev/null 2>&1
   echo "-----> Building ..."
   make >/dev/null 2>&1
   echo "-----> Installing ..."
@@ -74,26 +76,21 @@ if [ ! -d $CACHE_DIR/proj4 ]; then
   rm proj-datumgrid-1.4.tar.gz
   rm -rf proj-4.7.0
   rm -rf proj-datumgrid-1.4
+  mv /app/.geodjango/proj4 $CACHE_DIR
 fi
 
 # Install GDAL
-#if [ ! -d $CACHE_DIR/gdal ]; then
-#  mkdir $CACHE_DIR/gdal
-#  cd $BUILD_DIR
-#  echo "-----> Fetching and installing GDAL 1.8.1"
-#  curl -O http://download.osgeo.org/gdal/gdal-1.8.1.tar.gz >/dev/null 2>&1
-#  tar xzvf gdal-1.8.1.tar.gz >/dev/null 2>&1
-#  cd gdal-1.8.1
-#  ./configure --with-geos=$CACHE_DIR/geos/bin/geos-config --prefix=$CACHE_DIR/gdal >/dev/null 2>&1
-#  echo "-----> Building ..."
-#  make >/dev/null 2>&1
-#  echo "-----> Installing ..."
-#  make install >/dev/null 2>&1
-#  echo "GDAL installed" | indent
-#  cd $BUILD_DIR
-#  rm gdal-1.8.1.tar.gz
-#  rm -rf gdal-1.8.1
-#fi
+if [ ! -d $CACHE_DIR/gdal ]; then
+  cd $BUILD_DIR
+  echo "-----> Fetching and installing GDAL 1.8.1"
+  curl -O https://s3.amazonaws.com/cirheroku/gdal-1.8.1.-heroku.tar.gz >/dev/null 2>&1
+  echo "-----> Installing ..."
+  tar xzvf gdal-1.8.1-heroku.tar.gz >/dev/null 2>&1
+  mv gdal-1.8.1-heroku $CACHE_DIR/gdal
+  rm -rf gdal-1.8.1-heroku
+  rm -rf gdal-1.8.1-heroku.tar.gz
+  echo "GDAL installed" | indent
+fi
 
 # Reject a non-packaged Django app.
 if [ "$NAME" = "Python" ]; then
@@ -143,6 +140,7 @@ mkdir -p .heroku
 mkdir -p .geodjango
 cp -R $CACHE_DIR/geos .geodjango
 cp -R $CACHE_DIR/proj4 .geodjango
+cp -R $CACHE_DIR/gdal .geodjango
 
 # Pylibmc support.
 source $BIN_DIR/steps/pylibmc
