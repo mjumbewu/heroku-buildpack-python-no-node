@@ -86,9 +86,8 @@ if [ ! -d $CACHE_DIR/gdal ]; then
   curl -O https://s3.amazonaws.com/cirheroku/gdal-1.8.1-heroku.tar.gz >/dev/null 2>&1
   echo "-----> Installing ..."
   tar xzvf gdal-1.8.1-heroku.tar.gz >/dev/null 2>&1
-  mv gdal-1.8.1-heroku $CACHE_DIR/gdal
-  rm -rf gdal-1.8.1-heroku
-  rm -rf gdal-1.8.1-heroku.tar.gz
+  mv gdal $CACHE_DIR/gdal
+  rm gdal-1.8.1-heroku.tar.gz
   echo "GDAL installed" | indent
 fi
 
