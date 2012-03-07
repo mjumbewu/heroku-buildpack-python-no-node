@@ -13,7 +13,7 @@ Usage
 
 Example usage:
 
-    $ heroku create --stack cedar --buildpack https://github.com/cirlabs/heroku-buildpack-geodjango/
+    $ heroku create --stack cedar --buildpack http://github.com/cirlabs/heroku-buildpack-geodjango/
 
     $ git push heroku master
     ...
