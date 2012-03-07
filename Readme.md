@@ -16,32 +16,31 @@ Example usage:
     $ ls
     Procfile  requirements.txt  web.py
 
-    $ heroku create --stack cedar --buildpack git@github.com:heroku/heroku-buildpack-python.git
+    $ heroku create --stack cedar --buildpack https://github.com/cirlabs/heroku-buildpack-geodjango/
 
     $ git push heroku master
     ...
     -----> Heroku receiving push
-    -----> Fetching custom build pack... done
+    -----> Fetching custom buildpack... done
     -----> Python app detected
-    -----> Preparing virtualenv version 1.6.4
-           New python executable in ./bin/python
-           Installing setuptools............done.
-           Installing pip...............done.
-    -----> Installing dependencies using pip version 1.0.2
-           Downloading/unpacking Flask==0.7.2 (from -r requirements.txt (line 1))
-           Downloading/unpacking Werkzeug>=0.6.1 (from Flask==0.7.2->-r requirements.txt (line 1))
-           Downloading/unpacking Jinja2>=2.4 (from Flask==0.7.2->-r requirements.txt (line 1))
-           Installing collected packages: Flask, Werkzeug, Jinja2
-           Successfully installed Flask Werkzeug Jinja2
-           Cleaning up...
+    -----> Fetching and installing GEOS 3.3.2
+    -----> Installing ...
+       GEOS installed
+    -----> Fetching and installing Proj.4 4.7.0
+    -----> Installing ...
+       Proj.4 installed
+    -----> Fetching and installing GDAL 1.8.1
+    -----> Installing ...
+       GDAL installed
+    -----> Preparing virtualenv version 1.7
+    ... etc.
 
-The buildpack will detect your app as Python if it has the file `requirements.txt` in the root. It will detect your app as Python/Django if there is an additional `settings.py` in a project subdirectory.
+Notes
+-----
 
-It will use virtualenv and pip to install your dependencies, vendoring a copy of the Python runtime into your slug.  The `bin/`, `include/` and `lib/` directories will be cached between builds to allow for faster pip install time.
+All libraries are stored in /app/.github.
 
-Hacking
--------
+IMPORTANT: You will need to set two Django settings in order for GEOS and GDAL to work properly!
 
-To use this buildpack, fork it on Github.  Push up changes to your fork, then create a test app with `--buildpack <your-github-url>` and push to it.
-
-To change the vendored virtualenv, unpack the desired version to the `src/` folder, and update the virtualenv() function in `bin/compile` to prepend the virtualenv module directory to the path. The virtualenv release vendors its own versions of pip and setuptools.
+GEOS_LIBRARY_PATH = '/app/.geodjango/geos/lib/libgeos_c.so'
+GDAL_LIBRARY_PATH = '/app/.geodjango/gdal/lib/libgdal.so'
