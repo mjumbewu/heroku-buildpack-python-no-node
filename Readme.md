@@ -40,4 +40,5 @@ All libraries are stored in /app/.github.
 IMPORTANT: You will need to set two Django settings in order for GEOS and GDAL to work properly!
 
 GEOS_LIBRARY_PATH = '/app/.geodjango/geos/lib/libgeos_c.so'
+
 GDAL_LIBRARY_PATH = '/app/.geodjango/gdal/lib/libgdal.so'
