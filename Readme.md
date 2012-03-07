@@ -13,9 +13,6 @@ Usage
 
 Example usage:
 
-    $ ls
-    Procfile  requirements.txt  web.py
-
     $ heroku create --stack cedar --buildpack https://github.com/cirlabs/heroku-buildpack-geodjango/
 
     $ git push heroku master
