@@ -130,6 +130,50 @@ for dir in $CACHED_DIRS; do
   cp -R $CACHE_DIR/$dir . &> /dev/null || true
 done
 
+# ### GIS Dependency Setup
+#
+
+# Install GEOS
+if [ ! -d $CACHE_DIR/gdal ]; then
+  cd $BUILD_DIR
+  echo "-----> Fetching and installing GEOS 3.3.2"
+  curl -O https://s3.amazonaws.com/cirheroku/geos-3.3.2-herkou.tar.gz >/dev/null 2>&1
+  echo "-----> Installing ..."
+  tar xzvf geos-3.3.2-herkou.tar.gz >/dev/null 2>&1
+  mv geos $CACHE_DIR/geos
+  rm geos-3.3.2-herkou.tar.gz
+  echo "GEOS installed" | indent
+fi
+
+# Install Proj.4
+if [ ! -d $CACHE_DIR/gdal ]; then
+  cd $BUILD_DIR
+  echo "-----> Fetching and installing Proj.4 4.7.0"
+  curl -O https://s3.amazonaws.com/cirheroku/proj4-4.7.0-heroku.tar.gz >/dev/null 2>&1
+  echo "-----> Installing ..."
+  tar xzvf proj4-4.7.0-heroku.tar.gz >/dev/null 2>&1
+  mv proj4 $CACHE_DIR/proj4
+  rm proj4-4.7.0-heroku.tar.gz
+  echo "Proj.4 installed" | indent
+fi
+
+# Install GDAL
+if [ ! -d $CACHE_DIR/gdal ]; then
+  cd $BUILD_DIR
+  echo "-----> Fetching and installing GDAL 1.8.1"
+  curl -O https://s3.amazonaws.com/cirheroku/gdal-1.8.1-heroku.tar.gz >/dev/null 2>&1
+  echo "-----> Installing ..."
+  tar xzvf gdal-1.8.1-heroku.tar.gz >/dev/null 2>&1
+  mv gdal $CACHE_DIR/gdal
+  rm gdal-1.8.1-heroku.tar.gz
+  echo "GDAL installed" | indent
+fi
+
+# Create set-aside .geodjango folder and copy compiled files
+mkdir -p .geodjango
+cp -R $CACHE_DIR/geos .geodjango
+cp -R $CACHE_DIR/proj4 .geodjango
+cp -R $CACHE_DIR/gdal .geodjango
 
 # ### Virtualenv Setup
 #
