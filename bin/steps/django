@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 # This script serves as the Django build step of the
-# [**Python Buildpack**](https://github.com/heroku/heroku-buildpack-python) 
-# compiler. 
-# 
-# A [buildpack](http://devcenter.heroku.com/articles/buildpacks) is an 
+# [**Python Buildpack**](https://github.com/heroku/heroku-buildpack-python)
+# compiler.
+#
+# A [buildpack](http://devcenter.heroku.com/articles/buildpacks) is an
 # adapter between a Python application and Heroku's runtime.
 #
 # This script is invoked by [`bin/compile`](/).
@@ -66,5 +66,11 @@ try:
 except Exception:
     print 'Unexpected error:', sys.exc_info()
 
-EOF
+###
+# GeoDjango configuration
 
+# Let Django know where GEOS and GDAL live.
+GEOS_LIBRARY_PATH = '/app/.geodjango/geos/lib/libgeos_c.so'
+GDAL_LIBRARY_PATH = '/app/.geodjango/gdal/lib/libgdal.so'
+
+EOF
