@@ -21,8 +21,12 @@ fi
 echo "-----> Injecting Django settings..."
 
 
-SETTINGS_FILE=$(find . -maxdepth 3 -type f -name 'settings.py' | head -1 ||
-                find . -maxdepth 4 -type f -name '__init__.py' | grep -F 'settings/__init__.py' | head -1)
+SETTINGS_FILE=$(find . -maxdepth 3 -type f -name 'settings.py' | head -1)
+if [ "$SETTINGS_FILE" = "" ]
+then
+    SETTINGS_FILE=$(find . -maxdepth 4 -type f -name '__init__.py' | grep -F 'settings/__init__.py' | head -1)
+fi
+
 PROJECT=$(dirname $SETTINGS_FILE)
 
 echo "Injecting code into $SETTINGS_FILE to read from DATABASE_URL" | indent
