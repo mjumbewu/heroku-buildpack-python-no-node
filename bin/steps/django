@@ -74,6 +74,12 @@ except Exception:
 ###
 # GeoDjango configuration
 
+EOF
+
+echo "Injecting code into $SETTINGS_FILE to find the GEOS and GDAL libraries" | indent
+
+cat >>$SETTINGS_FILE <<EOF
+
 # Let Django know where GEOS and GDAL live.
 GEOS_LIBRARY_PATH = '/app/.geodjango/geos/lib/libgeos_c.so'
 GDAL_LIBRARY_PATH = '/app/.geodjango/gdal/lib/libgdal.so'
